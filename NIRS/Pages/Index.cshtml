@@ -1,0 +1,23 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center" data-bs-theme="dark">
+    @if (User.IsInRole("Admin"))
+    {
+        <h1>Welcome, Admin!</h1>
+        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Dashboard/Index">Go to Admin Dashboard</a>
+    }
+    else if (User.IsInRole("User"))
+    {
+        <h1>Welcome, User!</h1>
+    }
+    else
+    {
+        <h2>You are not logged in.</h2>
+    }
+
+    
+</div>

@@ -1,0 +1,28 @@
+﻿@page
+@model NIRS.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Input.FullName" class="control-label"></label>
+        <input asp-for="Input.FullName" class="form-control" />
+        <span asp-validation-for="Input.FullName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.EmailAddress" class="control-label"></label>
+        <input asp-for="Input.EmailAddress" class="form-control" />
+        <span asp-validation-for="Input.EmailAddress"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Password" class="control-label"></label>
+        <input asp-for="Input.Password" type="password" class="form-control" />
+        <span asp-validation-for="Input.Password"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

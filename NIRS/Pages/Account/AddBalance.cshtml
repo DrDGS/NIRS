@@ -1,0 +1,17 @@
+﻿@page
+@model NIRS.Pages.Account.AddBalanceModel
+@{
+}
+
+<h1>Добавить баланс</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Input.Balance" class="control-label"></label>
+        <input asp-for="Input.Balance" class="form-control" />
+        <span asp-validation-for="Input.Balance"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>

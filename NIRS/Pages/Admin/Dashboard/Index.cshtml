@@ -1,0 +1,33 @@
+﻿@page
+@model NIRS.Pages.Admin.Dashboard.IndexModel
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="text-center" data-bs-theme="dark">
+	@if (User.IsInRole("Admin"))
+	{
+		<a asp-page="/Admin/Clubs/Index" class="nav-link text-light" asp-area="">Список клубов</a>
+		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
+		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
+		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
+		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
+		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>
+	}
+	else if (User.IsInRole("Manager")){
+		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
+		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
+		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
+		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
+		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>
+	}
+	else if (User.IsInRole("Cashier")){
+		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
+		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
+		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
+		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
+	}
+	else if (User.IsInRole("Tech")){
+		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>
+	}
+</div>
