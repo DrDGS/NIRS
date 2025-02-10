@@ -16,6 +16,16 @@ namespace NIRS.Pages.Admin.Devices
     {
         private readonly NIRS.Data.NIRSContext _context;
 
+        public IEnumerable<SelectListItem> OptionsList { get; set; }
+
+        List<string> Options = new()
+            {
+                "PC",
+                "PS4",
+                "PS5",
+                "XBOX",
+            };
+
         public CreateModel(NIRS.Data.NIRSContext context)
         {
             _context = context;
@@ -23,7 +33,8 @@ namespace NIRS.Pages.Admin.Devices
 
         public IActionResult OnGet()
         {
-        ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -35,6 +46,7 @@ namespace NIRS.Pages.Admin.Devices
         {
             if (!ModelState.IsValid)
             {
+                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 

@@ -16,6 +16,16 @@ namespace NIRS.Pages.Admin.Rates
     {
         private readonly NIRS.Data.NIRSContext _context;
 
+        public IEnumerable<SelectListItem> OptionsList { get; set; }
+
+        List<string> Options = new()
+            {
+                "PC",
+                "PS4",
+                "PS5",
+                "XBOX",
+            };
+
         public CreateModel(NIRS.Data.NIRSContext context)
         {
             _context = context;
@@ -23,6 +33,7 @@ namespace NIRS.Pages.Admin.Rates
 
         public IActionResult OnGet()
         {
+            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -34,6 +45,7 @@ namespace NIRS.Pages.Admin.Rates
         {
             if (!ModelState.IsValid)
             {
+                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 

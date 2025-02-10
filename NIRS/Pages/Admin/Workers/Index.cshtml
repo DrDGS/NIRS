@@ -1,0 +1,87 @@
+﻿@page
+@model NIRS.Pages.Admin.Workers.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+    <p>
+        <label>ФИО: <input type="text" asp-for="SearchFullNameString" /></label>
+        <label>Email: <input type="text" asp-for="SearchEmailAddressString" /></label>
+    </p>
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
+        <tr>
+            Роль
+            <select asp-for="Role" asp-items="Model.Roles">
+                <option value="">All</option>
+            </select>
+        </tr>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <tr>
+            Клуб
+            <select asp-for="Club" asp-items="Model.Clubs">
+                <option value="">All</option>
+            </select>
+        </tr>
+    }
+    <input type="submit" value="Filter" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker[0].EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker[0].Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker[0].Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Worker[0].Club)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Worker) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Club.Address)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -17,8 +17,12 @@ namespace NIRS.Data
         public DbSet<NIRS.Models.User> User { get; set; } = default!;
         public DbSet<NIRS.Models.Club> Club { get; set; } = default!;
         public DbSet<NIRS.Models.Device> Device { get; set; } = default!;
-        public DbSet<NIRS.Models.Review> Review { get; set; } = default!;
         public DbSet<NIRS.Models.Rate> Rate { get; set; } = default!;
         public DbSet<NIRS.Models.Order> Order { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+        }
+        public DbSet<NIRS.Models.Worker> Worker { get; set; } = default!;
     }
 }

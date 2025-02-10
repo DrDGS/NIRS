@@ -9,12 +9,20 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<NIRSContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("NIRSContext") ?? throw new InvalidOperationException("Connection string 'NIRSContext' not found.")));
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Login";
         options.AccessDeniedPath = "/AccessDenied";
     });
+
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole(); // Enable console logging
+    loggingBuilder.AddDebug();   // Enable debug logging
+});
 
 var app = builder.Build();
 

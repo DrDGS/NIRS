@@ -42,9 +42,43 @@ namespace NIRS.Pages.Account
                 return Page();
             }
 
+
             var user = await _context.User.FirstOrDefaultAsync(u => u.EmailAddress == Input.Email);
             if (user == null || Input.Password != user.Password)
             {
+                var worker = await _context.Worker.FirstOrDefaultAsync(u => u.EmailAddress == Input.Email);
+
+                if (worker != null && Input.Password == worker.Password)
+                {
+                    var claims_worker = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, worker.Id.ToString()),
+                        new Claim(ClaimTypes.Email, worker.EmailAddress),
+                        new Claim(ClaimTypes.Name, worker.FullName),
+                        new Claim(ClaimTypes.Role, worker.Role),
+                        new Claim("ClubId", worker.ClubId.ToString()),
+                        new Claim("Balance", "0")
+                    };
+
+                    var identity_worker = new ClaimsIdentity(claims_worker, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal_worker = new ClaimsPrincipal(identity_worker);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal_worker);
+
+                    var balanceClaim_worker = User.Claims.FirstOrDefault(u => u.Type == "Balance");
+                    if (balanceClaim_worker != null && int.TryParse(balanceClaim_worker.Value, out int balance_worker))
+                    {
+                        ViewData["ClubId"] = balance_worker;
+                    }
+                    var clubIdClaim_worker = User.Claims.FirstOrDefault(u => u.Type == "ClubId");
+                    if (clubIdClaim_worker != null && int.TryParse(clubIdClaim_worker.Value, out int clubId_worker))
+                    {
+                        ViewData["ClubId"] = clubId_worker;
+                    }
+
+                    return RedirectToPage("/Index");
+                }
+
                 ModelState.AddModelError("", "Invalid email or password.");
                 return Page();
             }
@@ -55,8 +89,8 @@ namespace NIRS.Pages.Account
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.EmailAddress),
                 new Claim(ClaimTypes.Name, user.FullName),
-                new Claim(ClaimTypes.Role, user.Role),
-                new Claim("Club", user.ClubId.ToString()),
+                new Claim(ClaimTypes.Role, "User"),
+                new Claim("ClubId", "0"),
                 new Claim("Balance", user.Balance.ToString())
             };
 
@@ -64,6 +98,17 @@ namespace NIRS.Pages.Account
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            var balanceClaim = User.Claims.FirstOrDefault(u => u.Type == "Balance");
+            if (balanceClaim != null && int.TryParse(balanceClaim.Value, out int balance))
+            {
+                ViewData["Balance"] = balance;
+            }
+            var clubIdClaim = User.Claims.FirstOrDefault(u => u.Type == "ClubId");
+            if (clubIdClaim != null && int.TryParse(clubIdClaim.Value, out int clubId))
+            {
+                ViewData["ClubId"] = clubId;
+            }
 
             return RedirectToPage("/Index");
         }

@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using NIRS.Data;
 using NIRS.Models;
 
-namespace NIRS.Pages.Admin.Reviews
+namespace NIRS.Pages.Admin.Workers
 {
-    [Authorize(Roles = "Admin,Manager,Cashier")]
+    [Authorize(Roles = "Admin,Manager")]
     public class DetailsModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
@@ -21,7 +21,7 @@ namespace NIRS.Pages.Admin.Reviews
             _context = context;
         }
 
-        public Review Review { get; set; } = default!;
+        public Worker Worker { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,11 +30,11 @@ namespace NIRS.Pages.Admin.Reviews
                 return NotFound();
             }
 
-            var review = await _context.Review.FirstOrDefaultAsync(m => m.Id == id);
+            var worker = await _context.Worker.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (review is not null)
+            if (worker is not null)
             {
-                Review = review;
+                Worker = worker;
 
                 return Page();
             }

@@ -62,15 +62,14 @@ namespace NIRS.Pages.Account
                 FullName = Input.FullName,
                 EmailAddress = Input.EmailAddress,
                 Password = Input.Password,
-                Role = "Client",
-                ClubId = 1,
+                Role = "User",
                 Balance = 0
             };
 
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Login");
+            return RedirectToPage("/Account/Login");
         }
     }
 }

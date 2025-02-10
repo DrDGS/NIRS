@@ -14,12 +14,12 @@ namespace NIRS.Models
         [Required(ErrorMessage = "Требуется описание тарифа")]
         public string? Description { get; set; }
 
-        [Display(Name = "Руб/час")]
-        [Required(ErrorMessage = "Требуется цена (руб/час) тарифа")]
-        public int RublesPerMinute { get; set; }
+        [Display(Name = "Руб/мин")]
+        [Required(ErrorMessage = "Требуется цена (руб/мин) тарифа")]
+        public int? RublesPerMinute { get; set; }
 
         [Display(Name = "Устройство")]
         [Required(ErrorMessage = "Требуется указание устройства")]
-        public string? DeviceName { get; set; }
+        public string? DeviceType { get; set; }
     }
 }

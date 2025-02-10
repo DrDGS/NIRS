@@ -11,21 +11,31 @@
 		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
 		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
 		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
-		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
+		<a asp-page="/Admin/Workers/Index" class="nav-link text-light" asp-area="">Список рабочих</a>
 		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>
+		<br />
+		<div>
+			<b>Статистика:</b>
+			<ul>
+				<li>Общее число заказов: @Model.TotalOrders</li>
+				<li>Общая выручка: @Model.TotalRevenue рублей</li>
+				<li>Игрок с наибольшим кол-вом минут: @Model.TopUserName - @Model.MostTimePlayed минут</li>
+				<li>Самый популярный тариф: @Model.MostOrderedRateName</li>
+				<li>Общее число заказов на этот тариф: @Model.TotalOrdersForMostOrderedRate</li>
+			</ul>
+		</div>
 	}
 	else if (User.IsInRole("Manager")){
 		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
 		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
 		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
-		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
+		<a asp-page="/Admin/Workers/Index" class="nav-link text-light" asp-area="">Список рабочих</a>
 		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>
 	}
 	else if (User.IsInRole("Cashier")){
 		<a asp-page="/Admin/Users/Index" class="nav-link text-light" asp-area="">Список пользователей</a>
 		<a asp-page="/Admin/Orders/Index" class="nav-link text-light" asp-area="">Список заказов</a>
 		<a asp-page="/Admin/Rates/Index" class="nav-link text-light" asp-area="">Список тарифов</a>
-		<a asp-page="/Admin/Reviews/Index" class="nav-link text-light" asp-area="">Список отзывов</a>
 	}
 	else if (User.IsInRole("Tech")){
 		<a asp-page="/Admin/Devices/Index" class="nav-link text-light" asp-area="">Список устройств</a>

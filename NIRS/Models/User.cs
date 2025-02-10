@@ -6,6 +6,12 @@ namespace NIRS.Models
 {
     public class User
     {
+        public User()
+        {
+            Role = "User";
+            Balance = 0;
+        }
+
         public int Id { get; set; }
 
         [Display(Name = "ФИО/ФИ")]
@@ -27,13 +33,9 @@ namespace NIRS.Models
         [Required(ErrorMessage = "Требуется указание роли")]
         public string? Role { get; set; }
 
-        [Display(Name = "Клуб")]
-        [Required(ErrorMessage = "Требуется указание клуба")]
-        public int ClubId { get; set; }
-        [ForeignKey("ClubId")]
-        public Club? Club { get; set; }
-
         [Display(Name = "Баланс")]
-        public int? Balance { get; set; } 
+        public int? Balance { get; set; }
+
+        public ICollection<Order> Orders { get; } = new List<Order>();
     }
 }

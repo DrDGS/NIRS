@@ -16,16 +16,6 @@ namespace NIRS.Pages.Admin.Users
     public class EditModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
-        public IEnumerable<SelectListItem> OptionsList { get; set; }
-
-        List<string> Options = new()
-            {
-                "Admin",
-                "Manager",
-                "Cashier",
-                "Tech",
-                "Client"
-            };
 
         public EditModel(NIRS.Data.NIRSContext context)
         {
@@ -49,7 +39,6 @@ namespace NIRS.Pages.Admin.Users
             }
             User = user;
             ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
-            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -59,7 +48,6 @@ namespace NIRS.Pages.Admin.Users
         {
             if (!ModelState.IsValid)
             {
-                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 

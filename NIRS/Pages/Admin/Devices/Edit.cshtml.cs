@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,9 +12,20 @@ using NIRS.Models;
 
 namespace NIRS.Pages.Admin.Devices
 {
+    [Authorize(Roles = "Admin,Manager,Tech")]
     public class EditModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
+
+        public IEnumerable<SelectListItem> OptionsList { get; set; }
+
+        List<string> Options = new()
+            {
+                "PC",
+                "PS4",
+                "PS5",
+                "XBOX",
+            };
 
         public EditModel(NIRS.Data.NIRSContext context)
         {
@@ -36,7 +48,8 @@ namespace NIRS.Pages.Admin.Devices
                 return NotFound();
             }
             Device = device;
-           ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -46,6 +59,7 @@ namespace NIRS.Pages.Admin.Devices
         {
             if (!ModelState.IsValid)
             {
+                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 

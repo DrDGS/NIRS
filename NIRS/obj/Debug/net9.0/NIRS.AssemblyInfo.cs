@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NIRS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71d756068bb2382087afab775304f902aa8b8390")]
 [assembly: System.Reflection.AssemblyProductAttribute("NIRS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NIRS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

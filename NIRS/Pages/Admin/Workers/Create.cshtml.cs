@@ -9,12 +9,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NIRS.Data;
 using NIRS.Models;
 
-namespace NIRS.Pages.Admin.Reviews
+namespace NIRS.Pages.Admin.Workers
 {
-    [Authorize(Roles = "Admin,Manager,Cashier")]
+    [Authorize(Roles = "Admin,Manager")]
     public class CreateModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
+        public IEnumerable<SelectListItem> OptionsList { get; set; }
+
+        List<string> Options = new()
+            {
+                "Admin",
+                "Manager",
+                "Cashier",
+                "Tech",
+                "User"
+            };
 
         public CreateModel(NIRS.Data.NIRSContext context)
         {
@@ -23,22 +33,24 @@ namespace NIRS.Pages.Admin.Reviews
 
         public IActionResult OnGet()
         {
-        ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
         [BindProperty]
-        public Review Review { get; set; } = default!;
+        public Worker Worker { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 
-            _context.Review.Add(Review);
+            _context.Worker.Add(Worker);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

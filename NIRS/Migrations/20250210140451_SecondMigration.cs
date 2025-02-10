@@ -10,9 +10,14 @@ namespace NIRS.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.RenameColumn(
+                name: "DeviceName",
+                table: "Rate",
+                newName: "DeviceType");
+
             migrationBuilder.AddColumn<string>(
-                name: "Role",
-                table: "User",
+                name: "Type",
+                table: "Device",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +27,13 @@ namespace NIRS.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Role",
-                table: "User");
+                name: "Type",
+                table: "Device");
+
+            migrationBuilder.RenameColumn(
+                name: "DeviceType",
+                table: "Rate",
+                newName: "DeviceName");
         }
     }
 }

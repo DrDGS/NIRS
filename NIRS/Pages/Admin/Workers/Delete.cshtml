@@ -1,5 +1,5 @@
 ﻿@page
-@model NIRS.Pages.Admin.Reviews.DeleteModel
+@model NIRS.Pages.Admin.Workers.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,43 +9,43 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Review</h4>
+    <h4>Worker</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Review.Club)
+            @Html.DisplayNameFor(model => model.Worker.FullName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Review.Club.Address)
+            @Html.DisplayFor(model => model.Worker.FullName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Review.UserId)
+            @Html.DisplayNameFor(model => model.Worker.EmailAddress)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Review.UserId)
+            @Html.DisplayFor(model => model.Worker.EmailAddress)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Review.Rating)
+            @Html.DisplayNameFor(model => model.Worker.Password)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Review.Rating)
+            @Html.DisplayFor(model => model.Worker.Password)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Review.Text)
+            @Html.DisplayNameFor(model => model.Worker.Role)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Review.Text)
+            @Html.DisplayFor(model => model.Worker.Role)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Review.CreationDate)
+            @Html.DisplayNameFor(model => model.Worker.Club)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Review.CreationDate)
+            @Html.DisplayFor(model => model.Worker.Club.Address)
         </dd>
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="Review.Id" />
+        <input type="hidden" asp-for="Worker.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

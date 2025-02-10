@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,19 +11,10 @@ using NIRS.Models;
 
 namespace NIRS.Pages.Admin.Users
 {
+    [Authorize(Roles = "Admin,Manager,Cashier")]
     public class CreateModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
-        public IEnumerable<SelectListItem> OptionsList { get; set; }
-
-        List<string> Options = new()
-            {
-                "Admin",
-                "Manager",
-                "Cashier",
-                "Tech",
-                "Client"
-            };
 
         public CreateModel(NIRS.Data.NIRSContext context)
         {
@@ -32,7 +24,6 @@ namespace NIRS.Pages.Admin.Users
         public IActionResult OnGet()
         {
             ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
-            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -44,7 +35,6 @@ namespace NIRS.Pages.Admin.Users
         {
             if (!ModelState.IsValid)
             {
-                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 

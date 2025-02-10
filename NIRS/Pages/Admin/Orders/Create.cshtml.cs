@@ -11,7 +11,7 @@ using NIRS.Models;
 
 namespace NIRS.Pages.Admin.Orders
 {
-    [Authorize(Roles = "Admin,Manager,Cashier")]
+    [Authorize(Roles = "Admin,Manager,Cashier,Client")]
     public class CreateModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
@@ -23,8 +23,8 @@ namespace NIRS.Pages.Admin.Orders
 
         public IActionResult OnGet()
         {
-        ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
-        ViewData["RateId"] = new SelectList(_context.Rate, "Id", "Description");
+            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            ViewData["RateId"] = new SelectList(_context.Rate, "Id", "Description");
             return Page();
         }
 

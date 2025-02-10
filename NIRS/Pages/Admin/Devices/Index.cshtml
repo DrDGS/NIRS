@@ -10,11 +10,45 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form>
+    <tr>
+        Название
+        <select asp-for="Name" asp-items="Model.Names">
+            <option value="">All</option>
+        </select>
+    </tr>
+    <tr>
+        Type
+        <select asp-for="Type" asp-items="Model.Types">
+            <option value="">All</option>
+        </select>
+    </tr>
+    <tr>
+        Клуб
+        <select asp-for="Club" asp-items="Model.Clubs">
+            <option value="">All</option>
+        </select>
+    </tr>
+    <tr>
+        Работоспособность
+        <select asp-for="IsWorking" asp-items="Model.AreWorking">
+            <option value="">All</option>
+        </select>
+    </tr>
+    <tr>
+        <input type="submit" value="Filter" />
+    </tr>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Device[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Device[0].Type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Device[0].Club)
@@ -32,16 +66,38 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Club.Address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.isWorking)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                @if (User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
+                @if (User.IsInRole("Tech"))
+                {
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
         </tr>
 }
     </tbody>

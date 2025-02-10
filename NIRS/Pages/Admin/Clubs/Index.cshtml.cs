@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using NIRS.Models;
 
 namespace NIRS.Pages.Clubs
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
@@ -21,9 +23,19 @@ namespace NIRS.Pages.Clubs
 
         public IList<Club> Club { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchAddressString { get; set; }
+
         public async Task OnGetAsync()
         {
-            Club = await _context.Club.ToListAsync();
+            var clubs = from c in _context.Club select c;
+
+            if (!string.IsNullOrEmpty(SearchAddressString))
+            {
+                clubs = clubs.Where(x => x.Address.Contains(SearchAddressString));
+            }
+
+            Club = await clubs.ToListAsync();
         }
     }
 }

@@ -41,12 +41,28 @@
                         </ul>
                     </div>
                 }
-                else
+                else if (!User.IsInRole("User"))
                 {
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-light">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/Account/Logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                @if (User.IsInRole("User")){
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-light">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                @await Component.InvokeAsync("UserBalance") <!-- Render the View Component -->
+                                <a class="nav-link text-light" asp-area="" asp-page="/Account/AddBalance">Пополнить</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-page="/Account/Logout">Logout</a>

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NIRS.Data;
 using NIRS.Models;
 
@@ -23,17 +25,26 @@ namespace NIRS.Pages.Admin.Users
 
         public IList<User> _User { get;set; } = default!;
 
+        [BindProperty(SupportsGet = true)]
+        public string? SearchFullNameString { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SearchEmailAddressString { get; set; }
+
         public async Task OnGetAsync()
         {
-            var user = _context.User;
+            var users = from u in _context.User select u;
 
-            if (User.IsInRole("Manager") || User.IsInRole("Cashier"))
+            if (!SearchFullNameString.IsNullOrEmpty())
             {
-                
+                users = users.Where(u => u.FullName.Contains(SearchFullNameString));
+            }
+            if (!SearchEmailAddressString.IsNullOrEmpty())
+            {
+                users = users.Where(u => u.EmailAddress.Contains(SearchEmailAddressString));
             }
 
-            _User = await _context.User
-                .Include(u => u.Club).ToListAsync();
+            _User = await users.ToListAsync();
         }
     }
 }

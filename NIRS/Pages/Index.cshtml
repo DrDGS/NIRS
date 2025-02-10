@@ -7,16 +7,32 @@
 <div class="text-center" data-bs-theme="dark">
     @if (User.IsInRole("Admin"))
     {
-        <h1>Welcome, Admin!</h1>
+        <h1>Welcome, @User.Identity.Name!</h1>
         <a class="nav-link text-light" asp-area="" asp-page="/Admin/Dashboard/Index">Go to Admin Dashboard</a>
+    }
+    else if (User.IsInRole("Manager"))
+    {
+        <h1>Welcome, @User.Identity.Name!</h1>
+        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Dashboard/Index">Go to Manager Dashboard</a>
+    }
+    else if (User.IsInRole("Cashier"))
+    {
+        <h1>Welcome, @User.Identity.Name! @ViewData["ClubId"]</h1>
+        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Dashboard/Index">Go to Cashier Dashboard</a>
+    }
+    else if (User.IsInRole("Tech"))
+    {
+        <h1>Welcome, @User.Identity.Name!</h1>
+        <a class="nav-link text-light" asp-area="" asp-page="/Admin/Dashboard/Index">Go to Tech Support Dashboard</a>
     }
     else if (User.IsInRole("User"))
     {
-        <h1>Welcome, User!</h1>
+        <h1>Добро пожаловать, @User.Identity.Name!</h1>
+        <a class="nav-link text-light" asp-area="" asp-page="/MakeOrder">Заказать аренду устройства</a>
     }
     else
     {
-        <h2>You are not logged in.</h2>
+        <h2>Вы не зарегестрированы.</h2>
     }
 
     

@@ -10,12 +10,22 @@ using Microsoft.EntityFrameworkCore;
 using NIRS.Data;
 using NIRS.Models;
 
-namespace NIRS.Pages.Admin.Reviews
+namespace NIRS.Pages.Admin.Workers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Manager")]
     public class EditModel : PageModel
     {
         private readonly NIRS.Data.NIRSContext _context;
+        public IEnumerable<SelectListItem> OptionsList { get; set; }
+
+        List<string> Options = new()
+            {
+                "Admin",
+                "Manager",
+                "Cashier",
+                "Tech",
+                "User"
+            };
 
         public EditModel(NIRS.Data.NIRSContext context)
         {
@@ -23,7 +33,7 @@ namespace NIRS.Pages.Admin.Reviews
         }
 
         [BindProperty]
-        public Review Review { get; set; } = default!;
+        public Worker Worker { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,13 +42,14 @@ namespace NIRS.Pages.Admin.Reviews
                 return NotFound();
             }
 
-            var review =  await _context.Review.FirstOrDefaultAsync(m => m.Id == id);
-            if (review == null)
+            var worker =  await _context.Worker.FirstOrDefaultAsync(m => m.Id == id);
+            if (worker == null)
             {
                 return NotFound();
             }
-            Review = review;
+            Worker = worker;
            ViewData["ClubId"] = new SelectList(_context.Club, "Id", "Address");
+            OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
             return Page();
         }
 
@@ -48,10 +59,11 @@ namespace NIRS.Pages.Admin.Reviews
         {
             if (!ModelState.IsValid)
             {
+                OptionsList = Options.Select(option => new SelectListItem { Value = option, Text = option });
                 return Page();
             }
 
-            _context.Attach(Review).State = EntityState.Modified;
+            _context.Attach(Worker).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +71,7 @@ namespace NIRS.Pages.Admin.Reviews
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReviewExists(Review.Id))
+                if (!WorkerExists(Worker.Id))
                 {
                     return NotFound();
                 }
@@ -72,9 +84,9 @@ namespace NIRS.Pages.Admin.Reviews
             return RedirectToPage("./Index");
         }
 
-        private bool ReviewExists(int id)
+        private bool WorkerExists(int id)
         {
-            return _context.Review.Any(e => e.Id == id);
+            return _context.Worker.Any(e => e.Id == id);
         }
     }
 }

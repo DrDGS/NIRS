@@ -12,6 +12,10 @@ namespace NIRS.Models
         [Required(ErrorMessage = "Требуется название устройства")]
         public string? Name { get; set; }
 
+        [Display(Name = "Тип")]
+        [Required(ErrorMessage = "Требуется указание типа устройства")]
+        public string? Type { get; set; }
+
         [Display(Name = "Клуб")]
         [Required(ErrorMessage = "Требуется указание клуба")]
         public int ClubId { get; set; }

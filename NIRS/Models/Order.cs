@@ -22,7 +22,7 @@ namespace NIRS.Models
         [Display(Name = "Клиент")]
         [Required(ErrorMessage = "Требуется указание клиента")]
         public int UserId { get; set; }
-        [ForeignKey("ClientId")]
+        [ForeignKey("UserId")]
         public User? User { get; set; }
 
         [Display(Name = "Тариф")]
@@ -33,7 +33,7 @@ namespace NIRS.Models
 
         [Display(Name = "Количество минут")]
         [Required(ErrorMessage = "Требуется указание количества минут")]
-        public int Minutes { get; set; }
+        public int? Minutes { get; set; }
 
         [Display(Name = "Дата оформления")]
         [DataType(DataType.Date)]
